@@ -1,33 +1,32 @@
+import 'dotenv/config';
 import { connectMySql, sequelize } from './config/mysql-db';
 import { AppRoutes } from './presentation/routes';
 import { Server } from './presentation/server';
 
-//conexión de Mongo
+// conexión de Mongo
 import { MongoDatabase } from './config/mongo-db';
 
 import './infrastructure/models/mysql-product.model';
 import './infrastructure/models/purchase.model';
 
-(async() => {
+(async () => {
   await main();
 })();
 
 async function main() {
 
-  // 1. Conectamos a MongoDB
-  await MongoDatabase.connect();
+  const dbType = process.env.DB_TYPE;
 
-  // 2. Conectamos a MySQL
-  await connectMySql();
+  if (dbType === 'mongo') {
+    await MongoDatabase.connect();
+  } else {
+    await connectMySql();
 
-  try {
     await sequelize.sync({ alter: true });
     console.log('Tablas sincronizadas correctamente');
-  } catch (error) {
-    console.error('Error al sincronizar tablas:', error);
   }
 
-  // 3. Iniciamos el servidor
+  // servidor
   const server = new Server({
     port: 3000,
     routes: AppRoutes.routes

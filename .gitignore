@@ -21,3 +21,7 @@ yarn-error.log*
 *.suo
 *.ntvs*
 *.njsproj
+
+# Datos persistentes de Docker (Bases de datos)
+mysql_data/
+mongo_data/
