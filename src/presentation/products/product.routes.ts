@@ -8,8 +8,13 @@ export class ProductRoutes {
   static get routes(): Router {
     const router = Router();
 
-    const datasource = new MysqlProductDatasourceImpl();
-    //const datasource = new MongoProductDatasourceImpl();
+    const dbType = process.env.DB_TYPE;
+
+    const datasource =
+      dbType === 'mongo'
+        ? new MongoProductDatasourceImpl()
+        : new MysqlProductDatasourceImpl();
+
     const productRepository = new ProductRepositoryImpl(datasource);
     const controller = new ProductsController(productRepository);
 
