@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { Router, Application } from 'express';
 
 interface Options {
   port: number;
@@ -6,7 +6,7 @@ interface Options {
 }
 
 export class Server {
-  public readonly app = express();
+  public readonly app: Application = express();
   private readonly port: number;
   private readonly routes: Router;
 
