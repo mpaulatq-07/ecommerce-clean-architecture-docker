@@ -1,4 +1,22 @@
 services:
+  app:
+    build: .
+    container_name: ecommerce_app
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/ecommerce_db
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=12345
+      - MYSQL_DB=ecommerce_db
+    depends_on:
+      - mongo
+      - mysql
+    volumes:
+      - .:/app
+    command: pnpm dev
+
   mysql:
     image: mysql:8
     container_name: mysql_db
