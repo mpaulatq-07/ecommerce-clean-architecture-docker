@@ -63,6 +63,10 @@ DB_USER=root
 DB_PASSWORD=12345
 DB_NAME=ecommerce_db
 ```
+Configura en /presentation/purchases/purchases.routes.ts (descomentarear Mysql y comentarear Mongo)
+```bash
+const productDatasource = new MysqlProductDatasourceImpl();
+```
 ✅ El sistema utilizará automáticamente Sequelize.
 
 ---
@@ -73,6 +77,10 @@ Configura en .env:
 ```bash
 DB_TYPE=mongo
 MONGO_URI=mongodb://localhost:27017/ecommerce_db
+```
+Configura en /presentation/purchases/purchases.routes.ts (descomentarear Mongo y comentarear Mysql)
+```bash
+const productDatasource = new MongoProductDatasourceImpl();
 ```
 ✅ El sistema utilizará automáticamente Mongoose.
 
@@ -124,6 +132,20 @@ GET  /purchases/history
 
 ---
 
+## ⚙️ Pruebas 
+Utilizar Thunder client (Visual studio) o postman.
+### Ejemplo:
+```bash
+POST http://localhost:3000/products
+```
+```bash
+Seecion Body 
+{
+  "name": "producto prueba",
+  "price": 1000,
+  "stock": 5
+}
+```
 ## Notas de Persistencia y Seguridad
 ### Persistencia local
 Estas carpetas son generadas automáticamente por Docker y están excluidas del repositorio (.gitignore).
@@ -136,4 +158,8 @@ MongoDB → mongo_data/
 Utiliza el archivo .env.template como base para crear tu .env:
 ```bash
 cp .env.template .env
+```
+Para correrlo, utilizar el comando:
+```bash
+docker compose up --build
 ```
